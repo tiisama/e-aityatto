@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<title>AIチャット</title>
+</head>
+<body>
+
+<input id="text">
+<button onclick="send()">送信</button>
+
+<div id="messages"></div>
+
+<script>
+async function send() {
+const text = document.getElementById("text").value;
+
+const res = await fetch("/api/chat", {
+method: "POST",
+headers: {
+"Content-Type": "application/json"
+},
+body: JSON.stringify({ message: text })
+});
+
+const data = await res.json();
+
+const div = document.createElement("div");
+div.textContent = "AI: " + data.reply;
+document.getElementById("messages").appendChild(div);
+}
+</script>
+
+</body>
+</html>
